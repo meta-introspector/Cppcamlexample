@@ -17,13 +17,13 @@ OCamlGame::OCamlGame()
     puts( "Initializing Game Code interface..." );
     memset( &current_input_data, 0, sizeof( InputData ) );
     
-    init_fn = caml_named_value( "init_fn" );
+    init_fn = (value*)caml_named_value( "init_fn" );
     assert( init_fn );
     
-    shutdown_fn = caml_named_value( "shutdown_fn" );
+    shutdown_fn = (value*)caml_named_value( "shutdown_fn" );
     assert( shutdown_fn );
     
-    step_fn = caml_named_value( "step_fn" );
+    step_fn = (value*)caml_named_value( "step_fn" );
     assert( step_fn );
     
     caml_callback( *init_fn, Val_unit );

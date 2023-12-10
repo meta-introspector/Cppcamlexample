@@ -130,18 +130,7 @@ file(GLOB OCAML_GAME_SOURCES
 
 include(FindPkgConfig)
 
-# find all of SDL2
-pkg_search_module(SDL2 REQUIRED sdl2)
-pkg_search_module(SDL2IMAGE REQUIRED SDL2_image)
-pkg_search_module(SDL2GFX REQUIRED SDL2_gfx)
-pkg_search_module(SDL2MIXER REQUIRED SDL2_mixer)
-pkg_search_module(SDL2TTF REQUIRED SDL2_ttf)
-
-find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
-# TODO: need to find/install libBullet3, OCaml and libSQLite3 - physics world requires Bullet, game data is SQLite3-backed, saves are in SQLite3 format
-
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2GFX_INCLUDE_DIRS} ${SDL2MIXER_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${ENGINE_INCLUDE_DIRS})
+include_directories( ${ENGINE_INCLUDE_DIRS} "/usr/local/lib/ocaml/")
 
 # NOTE: OCamlOpt/OCamlC cannot compile a shared object by itself - it fails during the linking phase, as it attempts to link a library with position-dependent code into a shared object.
 set(GAME_OBJ "${PROJECT_NAME}Game")
@@ -149,15 +138,15 @@ add_custom_target(${GAME_OBJ} "ocamlopt" "-g" "-fPIC" "-linkall" "-output-obj" "
 
 # build engine library
 set(LIBRARY_NAME "${PROJECT_NAME}Engine")
-add_library(${LIBRARY_NAME} SHARED ${SOURCES_AUDIO} ${SOURCES_CONFIGSTORE} ${SOURCES_GAME} ${SOURCES_PHYSICSWORLD} ${SOURCES_RENDERER} ${SOURCES_SCENEGRAPH} ${SOURCES_TOPLEVEL})
-target_link_libraries(${LIBRARY_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2GFX_LIBRARIES} ${SDL2MIXER_LIBRARIES} ${SDL2TTF_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} dl m ${OCAML_RUNTIMELIBRARY})
+add_library(${LIBRARY_NAME} SHARED ${SOURCES_AUDIO} ${SOURCES_CONFIGSTORE} ${SOURCES_GAME} ${SOURCES_PHYSICSWORLD} ${SOURCES_RENDERER} ${SOURCES_SCENEGRAPH} ${SOURCES_TOPLEVEL} "/usr/lib/x86_64-linux-gnu/libzstd.a")
+target_link_libraries(${LIBRARY_NAME}  dl m ${OCAML_RUNTIMELIBRARY})
 set_property(TARGET ${LIBRARY_NAME} PROPERTY C_STANDARD 99)
 set_property(TARGET ${LIBRARY_NAME} PROPERTY CXX_STANDARD 11)
 
 # build main executable
 add_executable(${PROJECT_NAME} ${APP_SOURCES_MAIN})
 add_dependencies(${PROJECT_NAME} ${LIBRARY_NAME} ${GAME_OBJ})
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2GFX_LIBRARIES} ${SDL2MIXER_LIBRARIES} ${SDL2TTF_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} dl m ${OCAML_RUNTIMELIBRARY} ${LIBRARY_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/build/game.o")
+target_link_libraries(${PROJECT_NAME}  dl m ${OCAML_RUNTIMELIBRARY} "/usr/lib/x86_64-linux-gnu/libzstd.a" ${LIBRARY_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/build/game.o")
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY C_STANDARD   99) # [90, 99, 11]
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11) # [98, 11, 14]

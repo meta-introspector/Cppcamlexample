@@ -11,9 +11,9 @@
 #include<caml/backtrace.h>
 #include<caml/bigarray.h>
 #include<caml/callback.h> // this one's the big important one for embedding OCaml
-#include<caml/compact.h>
+//#include<caml/compact.h>
 #include<caml/compare.h>
-#include<caml/compatibility.h>
+//#include<caml/compatibility.h>
 #include<caml/config.h>
 #include<caml/custom.h>
 #include<caml/debugger.h>
@@ -22,7 +22,7 @@
 #include<caml/fail.h>
 #include<caml/finalise.h>
 #include<caml/fix_code.h>
-#include<caml/freelist.h>
+//#include<caml/freelist.h>
 #include<caml/gc_ctrl.h>
 #include<caml/gc.h>
 #include<caml/globroots.h>
@@ -30,9 +30,9 @@
 #include<caml/hooks.h>
 #include<caml/instrtrace.h>
 #include<caml/instruct.h>
-#include<caml/int64_emul.h>
-#include<caml/int64_format.h>
-#include<caml/int64_native.h>
+//#include<caml/int64_emul.h>
+//#include<caml/int64_format.h>
+//#include<caml/int64_native.h>
 #include<caml/interp.h>
 #include<caml/intext.h>
 #include<caml/io.h>
@@ -48,17 +48,17 @@
 #include<caml/printexc.h>
 #include<caml/reverse.h>
 #include<caml/roots.h>
-#include<caml/signals_machdep.h>
+//#include<caml/signals_machdep.h>
 #include<caml/signals.h>
 #include<caml/socketaddr.h>
-#include<caml/spacetime.h>
+//#include<caml/spacetime.h>
 #include<caml/stack.h>
-#include<caml/stacks.h>
+//#include<caml/stacks.h>
 #include<caml/startup_aux.h>
 #include<caml/startup.h>
 #include<caml/sys.h>
 #include<caml/threads.h>
-#include<caml/ui.h>
+//#include<caml/ui.h>
 #include<caml/unixsupport.h>
 #include<caml/version.h>
 #include<caml/weak.h>

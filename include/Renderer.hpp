@@ -21,8 +21,7 @@ class Renderer
     void step();
   private:
     Renderer();
-    SDL_Window*    window    = nullptr;
-    SDL_GLContext  glcontext = nullptr;
+
 };
 
 }
